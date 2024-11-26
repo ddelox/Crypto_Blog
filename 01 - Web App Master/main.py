@@ -15,7 +15,7 @@ from flask_login import UserMixin, LoginManager, login_user, login_required, cur
 from functools import wraps
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = os.environ.get("FLASK_KEY")
 Bootstrap5(app)
 ckeditor = CKEditor(app)
 
@@ -24,7 +24,7 @@ ckeditor = CKEditor(app)
 class Base(DeclarativeBase):
     pass
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI", "sqlite:///posts.db")
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
